@@ -305,9 +305,16 @@ In this subsection, we give another central example of a group, but it will not 
 \begin{definition}
     Let $n$ be a positive integer. Let $C_n$ denote the set of equivalence classes of the equivalence relation $\sim$ on $\ZZ$ given by $a\sim b$ if and only if $n\mid(a-b)$. We will write $a\equiv b\pmod n$ instead of $a\sim b$. We will denote an equivalence class by $[a]_n$, where the equivalence class is represented by $a\in\ZZ$.
 \end{definition}
+\begin{remark} \label{rem:concrete-coset}
+    Fix a positive integer $n$. For concreteness, we note that an integer $a$ has equivalence class
+    \[[a]_n=\{b\in\ZZ:n\mid(b-a)\}=\{a+nk:k\in\ZZ\}.\]
+    As such, we might write $[a]_n=a+n\ZZ$.
+\end{remark}
 Later on, we will use the notation $\ZZ/n\ZZ$ instead of $C_n$, but we will not do so until we can explain this notation.
 \begin{example} \label{ex:mod-5}
-    For every integer $k\in\ZZ$, there exists exactly one element in $a\in\{0,1,2,3,4\}$ such that $k-a$ is divisible by $5$: indeed, divide $k$ by $5$ and take the remainder to retrieve $a$. Thus, we see $C_5=\{[0]_5,[1]_5,[2]_5,[3]_5,[4]_5\}$.
+    For every integer $k\in\ZZ$, there exists exactly one element in $a\in\{0,1,2,3,4\}$ such that $k-a$ is divisible by $5$: indeed, divide $k$ by $5$ and take the remainder to retrieve $a$. Thus, we see $C_5=\{[0]_5,[1]_5,[2]_5,[3]_5,[4]_5\}$. For concreteness, we note that
+    \[[1]_5=\{b\in\ZZ:5\mid(b-1)\}=\{1+5k:k\in\ZZ\}.\]
+    As such, we might write $[1]_5=1+5\ZZ$.
 \end{example}
 To generalize \Cref{ex:mod-5}, we will need to be precise about what we mean by ``division.'' For our purposes, we will want the division algorithm.
 \begin{theorem} \label{thm:division}
@@ -559,6 +566,9 @@ Let's see some examples.
 \begin{exe}
     Show that $\{e,s\}$ is a subgroup of $(D_4,\cdot)$.
 \end{exe}
+\begin{exe} \label{exe:klein-four}
+    Show that $\left\{e,s,r^2,sr^2\right\}$ is a subgroup of $(D_4,\cdot)$.
+\end{exe}
 Here are some non-examples.
 \begin{nex}
     The set of positive integers $\ZZ^+$ is not a subgroup of $(\ZZ,+)$. Indeed, the identity element $0\in\ZZ$ is not a positive integer.
@@ -572,6 +582,20 @@ Here are some non-examples.
     is not in $S$.
 \end{nex}
 Here are a few more abstract examples.
+\begin{proposition} \label{prop:cyclic-subgroup}
+    Let $(G,\cdot)$ be a group, and let $g\in G$ be an element. Then the subset
+    \[\langle g\rangle\coloneqq\left\{g^k:k\in\ZZ\right\}\]
+    is a subgroup of $G$. Here, $g^{-k}\coloneqq\left(g^{-1}\right)^k$ for any positive integer $k$.
+\end{proposition}
+\begin{proof}
+    We check our conditions by hand. The main content here is that we need to prove our exponent rules, but we will not be very formal about it. Feel free to ignore the footnotes.
+    \begin{itemize}
+        \item Identity: note that $e=g^0$ is in $\langle g\rangle$ by definition.
+        \item Closure: pick up elements $g^k,g^\ell\in\langle g\rangle$. Then $g^k\cdot g^\ell=g^{k+\ell}$ is in $\langle g\rangle$.\footnote{We have not technically proven that $g^k\cdot g^\ell=g^{k+\ell}$ for any $k,\ell\in\ZZ$. This is just a lot of casework. For $k,\ell\ge0$, there is nothing to say. If $k,\ell<0$, then $g^k\cdot g^\ell=\left(g^{-1}\right)^{-k}\cdot\left(g^{-1}\right)^{-\ell}=\left(g^{-1}\right)^{k+\ell}=g^{-k-\ell}$. Lastly, if one is nonnegative and the other negative, say $k\ge0$ and $\ell<0$. If $k\ge-\ell$, then $g^k\cdot g^\ell=g^{k-(-\ell)}\cdot g^{-\ell}\cdot\left(g^{-1}\right)^{-\ell}=g^{k}$. A similar argument works in the case where $k\le-\ell$.}
+        \item Inverse: suppose $g^k\in\langle g\rangle$. Then $\left(g^k\right)^{-1}=g^{-k}\in\langle g\rangle$.\footnote{Again, this equality requires an argument. If $k\ge0$, then $\left(g^k\right)^{-1}=({g\cdot\ldots\cdot g})^{-1}=\big({g^{-1}\cdot\ldots\cdot g^{-1}}_k\big)=\left(g^{-1}\right)^k=g^{-k}$, where each of the iterated multiplications happens $k$ times. If $k<0$, then note $g^k=\left(g^{-1}\right)^{-k}$ by definition, so $-k\ge0$ implies $\left(g^k\right)^{-1}=\left(g^{-1}\right)^k$ by prior work. Then $\left(g^{-1}\right)^k=\left(\left(g^{-1}\right)^{-1}\right)^{-k}$ by definition, which is $g^k$ by \Cref{lem:inv-inv}.}
+        \qedhere
+    \end{itemize}
+\end{proof}
 \begin{proposition} \label{prop:center}
     Let $(G,\cdot)$ be a group. Then the subset
     \[Z(G)\coloneqq\{g\in G:g\cdot h=h\cdot g\text{ for all }h\in G\}\]

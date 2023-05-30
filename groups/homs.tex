@@ -441,55 +441,101 @@ In fact, we can generalize the above proof to show that kernels have a special r
 \end{example}
 Now, \Cref{prop:ker-normal} tells us that all kernels are normal subgroups, and \Cref{ex:ker-of-quotient} tells us that all normal subgroups appear as the kernel of some map. Thus, we can (and should!) think about normal subgroups as the normal subgroups which arise as kernels.
 
-\subsection{The Homomorphism Theorem}
-We close this subsection by trying to generalize the isomorphism
-\[\frac{\ZZ/6\ZZ}{3\ZZ/6\ZZ}\cong\frac{\ZZ}{3\ZZ}.\]
-It turns out that this, too, arises from a more general construction. To see this, we recall that \Cref{ex:z6z-to-z3z-ker-im} provided us with some homomorphism $f\colon\ZZ/6\ZZ\to\ZZ/3\ZZ$ by $f\colon[k]_6\mapsto[k]_3$ with kernel $3\ZZ/6\ZZ$. Notice that by ``quotienting'' $f$ out by this kernel, we do obtain the above isomorphism sending $[k]_6+3\ZZ/6\ZZ\to[k]_3$.
+\subsection{Groups of Prime Order}
+As an application of the theory we have built, we will show the following result.
+\begin{restatable}{theorem}{groupsofordp} \label{thm:groups-of-ord-p}
+    Fix a prime $p$. All groups $(G,\cdot)$ with $\left|G\right|=p$ are isomorphic to each other. In fact, $G\cong\ZZ/p\ZZ$.
+\end{restatable}
+\noindent \Cref{thm:groups-of-ord-p} is really amazing: given only knowledge about the size of $G$, we are immediately able to make deductions about the group structure of $G$. This result is one example of what we mean when we say ``groups have structure'': a small amount of information leads to a larger amount of information because of ``structural'' constraints.
 
-Speaking more generally, given a homomorphism $f\colon G\to G'$, it is not unreasonable to expect some quotiented homomorphism $(G/\ker f)\to G'$ which is injective. After all, quotienting out by this kernel more or less declares all elements which go to the identity in $G'$ to be the identity in $G/\ker f$, so this map ought be injective by \Cref{lem:ker-subgroup}.
-
-All of this discussion is rather un-rigorous, but we can make it rigorous.
-\begin{theorem}[homomorphism] \label{thm:hom}
-    Let $f\colon G\to G'$ be a homomorphism of the groups $(G,\cdot)$ and $(G',\cdot')$. Then the function $\overline f\colon(G/\ker f)\to(\im f)$ defined by $\overline f(g\cdot(\ker f))\coloneqq f(g)$ is a well-defined function and an isomorphism.
-\end{theorem}
+Quickly, note that we have dealt with one-element groups in \Cref{ex:groups-of-ord-1}, so \Cref{thm:groups-of-ord-p} is the next simplest ``classification'' result for groups. Further, observe that groups can in general be somewhat complicated. For example, there are non-isomorphic groups of size $4$.
+\begin{example}
+    Let $V$ denote the subgroup $\left\{e,s,r^2,sr^2\right\}$ of $(D_4,\cdot)$. (See \Cref{exe:klein-four}.) We claim that $V$ and $\ZZ/4\ZZ$ are not isomorphic. To begin, note that $g^2=e$ for all $g\in V$, which we can check directly: note $s^2=r^4=e$. Now, let $\varphi\colon\ZZ/4\ZZ\to V$ be any homomorphism, and we show that $\varphi$ is not an isomorphism. Indeed, note
+    \[\varphi([2]_4)=\varphi([1]_4+[1]_4)=\varphi([1]_4)^2=e=\varphi([0]).\]
+    The key equality is $\varphi([1])^2=e$, which holds because all elements of $V$ square to $e$. Anyway, we see that $\varphi$ thus fails to be injective.
+\end{example}
+Going further, we know that there are non-isomorphic groups $G$ with $|G|=8$: indeed, we have seen the two groups $(D_4,\cdot)$ and $(\ZZ/8\ZZ,+)$; see \Cref{prob:groups-of-order-8} for details. One can also show that there are non-isomorphic groups of order $6$, but such examples are not immediate given what we have developed so far.
+\begin{remark}
+    In fact, there is a set of five groups of size $8$ such that any group of order $8$ is isomorphic to one of those five groups.
+\end{remark}
+Anyway, let's go ahead and prove \Cref{thm:groups-of-ord-p}. The key is the following lemma.
+\begin{lemma} \label{lem:subgroups-of-prime-order-group}
+    Fix a prime $p$, and let $(G,\cdot)$ be a group with $\left|G\right|=p$. Further, let $e$ denote the identity of $G$. For any subgroup $H\subseteq G$, either $H=\{e\}$ or $H=G$.
+\end{lemma}
 \begin{proof}
-    Quickly, note that $G/\ker f$ is a legal group because $\ker f\subseteq G$ is a normal subgroup by \Cref{prop:ker-normal}. Now, we have many checks to run on $\overline f$. For brevity, set $K\coloneq\ker f$.
+    The key input here is \Cref{thm:lagrange}. Indeed, by \Cref{thm:lagrange}, either $\left|H\right|=1$ or $\left|H\right|=p$ because $1$ and $p$ are the only positive divisors of $p$. We thus have two cases.
     \begin{itemize}
-        \item Well-defined and injective: this essentially follows from \Cref{prop:ker-normal}.
-        
-        We show that $g\cdot K=h\cdot K$ is equivalent to $\overline f(g\cdot K)=\overline f(h\cdot K)$. Unwinding the definition of $\overline f$, we must show $g\cdot K=h\cdot K$ is equivalent to $f(g)=f(h)$. Well, $f(g)=f(h)$ is equivalent to $g\cdot h^{-1}\in K$ by \Cref{prop:ker-normal}, which is equivalent to $g\cdot K=h\cdot K$ by \Cref{prop:how-to-coset}.
-        \item Surjective: we must show $\im\overline f=\im f$. Well, we compute
-        \begin{align*}
-            \im\overline f &= \{\overline f(x):x\in G/K\} \\
-            &= \{\overline f(g\cdot K):g\in G\} \\
-            &= \{f(g):g\in G\} \\
-            &= \im f.
-        \end{align*}
-        \item Homomorphism: for each $g\cdot K,h\cdot K\in G/K$, we check
-        \begin{align*}
-            \overline f((g\cdot K)\cdot(h\cdot K)) &= \overline f((g\cdot h)\cdot K) \\
-            &= f(g\cdot h) \\
-            &= f(g)\cdot'f(h) \\
-            &= \overline f(g\cdot K)\cdot'\overline f(h\cdot K).
-        \end{align*}
+        \item If $\left|H\right|=1$, then we note that $e\in H$ because $H$ is a subgroup, so the one-element set $\{e\}$ is a subset of $H$. Because $\left|\{e\}\right|=\left|H\right|$, we conclude $H=\{e\}$.
+        \item If $\left|H\right|=p$, then we see that $H\subseteq G$ while $\left|H\right|=\left|G\right|$, so $H=G$ follows.
     \end{itemize}
-    The above checks complete the proof.
+    The above casework completes the proof.
 \end{proof}
-In some sense, \Cref{thm:hom} is an isomorphism machine: it produces us isomorphisms even though we only feed it homomorphisms. As such, it is a very powerful tool. Let's see some examples.
-\begin{example}
-    Work in the context of \Cref{ex:real-part-hom,ex:real-part-ker-im}. Plugging $r\colon\CC\to\RR$ into \Cref{thm:hom} implies $\CC/\RR\cong\RR$.
-\end{example}
-\begin{example}
-    Work in the context of \Cref{ex:z-to-d4,ex:z-to-d4-ker-im}. Plugging $f\colon\ZZ\to D_4$ into \Cref{thm:hom} implies $\ZZ/4\ZZ\cong\left\{e,r,r^2,r^3\right\}$.
-\end{example}
-\begin{example}
-    Work in the context of \Cref{ex:z6z-to-z3z,ex:z6z-to-z3z-ker-im}. Plugging $f\colon\ZZ/6\ZZ\to\ZZ/3\ZZ$ recovers the fact $(\ZZ/6\ZZ)/(3\ZZ/6\ZZ)\cong\ZZ/3\ZZ$.
-\end{example}
-\begin{exe} \label{exe:fractions}
-    Let $(G,\cdot)$ be a group, and let $H,K\subseteq G$ be normal subgroups such that $K\subseteq H$. Show that the map $p\colon G/K\to G/H$ defined by $p(g\cdot K)\coloneqq g\cdot H$ is a well-defined homomorphism. By using \Cref{thm:hom}, conclude
-    \[\frac{G/K}{H/K}\cong\frac GK.\]
-\end{exe}
-Congratulations on making it to the end of this course. As our grand finale, \Cref{exe:fractions} tells us that we can do fractions.
+And now, here is our theorem.
+\groupsofordp*
+\begin{proof}
+    Because $\left|G\right|>1$, we may select an element $g\in G$ not equal to the identity $e\in G$. By \Cref{prop:ord-of-g-divides-ord-of-g}, note that $g^p=e$, where $e\in G$ is the identity. For intuition, note that the proof of \Cref{prop:ord-of-g-divides-ord-of-g} shows that
+    \[G=\left\{e,g,g^2,\ldots,g^{p-1}\right\},\]
+    and the right-hand side looks like $\ZZ/p\ZZ$ if we replace $g$ with $[1]_p$. With this in mind, we will show that the function $\varphi\colon\ZZ/p\ZZ\to G$ by
+    \[\varphi([k]_p)\coloneqq g^k\]
+    is an isomorphism. The main difficulty is showing that $\varphi$ is well-defined. Anyway, here are our checks.
+    \begin{itemize}
+        \item Well-defined: suppose $[k]_p=[\ell]_p$, and we want to show that $g^k=g^\ell$. Well, $[k]_p=[\ell]_p$ implies that $p\mid k-\ell$, so we may use \Cref{thm:division} to write $k=pq+\ell$ for some integer $q$. Then
+        \[g^k=g^{pq+\ell}=\left(g^p\right)^q\cdot g^\ell=e^q\cdot g^\ell=g^\ell.\]
+        \item Injective: by \Cref{lem:ker-subgroup}, it is enough to show that $\ker\varphi=\{[0]_p\}$. Well, we know that $\ker\varphi$ is a subgroup of $\ZZ/p\ZZ$ already, so \Cref{lem:subgroups-of-prime-order-group} implies that $\ker\varphi=\{[0]\}_p$ or $\ker\varphi=\ZZ/p\ZZ$. However, $\varphi([1]_p)=g\ne e$ by definition, so $[1]_p\notin\ker\varphi$, so $\ker\varphi\ne\ZZ/p\ZZ$, so $\ker\varphi=\{[0]_p\}$ follows.
+        \item Surjective: by \Cref{lem:im-subgroup}, it is enough to show that $\im\varphi=G$. Well, we know that $\im\varphi$ is a subgroup of $G$ already, so \Cref{lem:subgroups-of-prime-order-group} implies that $\im\varphi=\{e\}$ or $\im\varphi=G$. Well, $g=\varphi([1]_p)\in\im\varphi$, so $\im\varphi\ne\{e\}$, so $\im\varphi=G$ follows.
+        \qedhere
+    \end{itemize}
+\end{proof}
+
+% \subsection{The Homomorphism Theorem}
+% We close this subsection by trying to generalize the isomorphism
+% \[\frac{\ZZ/6\ZZ}{3\ZZ/6\ZZ}\cong\frac{\ZZ}{3\ZZ}.\]
+% It turns out that this, too, arises from a more general construction. To see this, we recall that \Cref{ex:z6z-to-z3z-ker-im} provided us with some homomorphism $f\colon\ZZ/6\ZZ\to\ZZ/3\ZZ$ by $f\colon[k]_6\mapsto[k]_3$ with kernel $3\ZZ/6\ZZ$. Notice that by ``quotienting'' $f$ out by this kernel, we do obtain the above isomorphism sending $[k]_6+3\ZZ/6\ZZ\to[k]_3$.
+
+% Speaking more generally, given a homomorphism $f\colon G\to G'$, it is not unreasonable to expect some quotiented homomorphism $(G/\ker f)\to G'$ which is injective. After all, quotienting out by this kernel more or less declares all elements which go to the identity in $G'$ to be the identity in $G/\ker f$, so this map ought be injective by \Cref{lem:ker-subgroup}.
+
+% All of this discussion is rather un-rigorous, but we can make it rigorous.
+% \begin{theorem}[homomorphism] \label{thm:hom}
+%     Let $f\colon G\to G'$ be a homomorphism of the groups $(G,\cdot)$ and $(G',\cdot')$. Then the function $\overline f\colon(G/\ker f)\to(\im f)$ defined by $\overline f(g\cdot(\ker f))\coloneqq f(g)$ is a well-defined function and an isomorphism.
+% \end{theorem}
+% \begin{proof}
+%     Quickly, note that $G/\ker f$ is a legal group because $\ker f\subseteq G$ is a normal subgroup by \Cref{prop:ker-normal}. Now, we have many checks to run on $\overline f$. For brevity, set $K\coloneq\ker f$.
+%     \begin{itemize}
+%         \item Well-defined and injective: this essentially follows from \Cref{prop:ker-normal}.
+        
+%         We show that $g\cdot K=h\cdot K$ is equivalent to $\overline f(g\cdot K)=\overline f(h\cdot K)$. Unwinding the definition of $\overline f$, we must show $g\cdot K=h\cdot K$ is equivalent to $f(g)=f(h)$. Well, $f(g)=f(h)$ is equivalent to $g\cdot h^{-1}\in K$ by \Cref{prop:ker-normal}, which is equivalent to $g\cdot K=h\cdot K$ by \Cref{prop:how-to-coset}.
+%         \item Surjective: we must show $\im\overline f=\im f$. Well, we compute
+%         \begin{align*}
+%             \im\overline f &= \{\overline f(x):x\in G/K\} \\
+%             &= \{\overline f(g\cdot K):g\in G\} \\
+%             &= \{f(g):g\in G\} \\
+%             &= \im f.
+%         \end{align*}
+%         \item Homomorphism: for each $g\cdot K,h\cdot K\in G/K$, we check
+%         \begin{align*}
+%             \overline f((g\cdot K)\cdot(h\cdot K)) &= \overline f((g\cdot h)\cdot K) \\
+%             &= f(g\cdot h) \\
+%             &= f(g)\cdot'f(h) \\
+%             &= \overline f(g\cdot K)\cdot'\overline f(h\cdot K).
+%         \end{align*}
+%     \end{itemize}
+%     The above checks complete the proof.
+% \end{proof}
+% In some sense, \Cref{thm:hom} is an isomorphism machine: it produces us isomorphisms even though we only feed it homomorphisms. As such, it is a very powerful tool. Let's see some examples.
+% \begin{example}
+%     Work in the context of \Cref{ex:real-part-hom,ex:real-part-ker-im}. Plugging $r\colon\CC\to\RR$ into \Cref{thm:hom} implies $\CC/\RR\cong\RR$.
+% \end{example}
+% \begin{example}
+%     Work in the context of \Cref{ex:z-to-d4,ex:z-to-d4-ker-im}. Plugging $f\colon\ZZ\to D_4$ into \Cref{thm:hom} implies $\ZZ/4\ZZ\cong\left\{e,r,r^2,r^3\right\}$.
+% \end{example}
+% \begin{example}
+%     Work in the context of \Cref{ex:z6z-to-z3z,ex:z6z-to-z3z-ker-im}. Plugging $f\colon\ZZ/6\ZZ\to\ZZ/3\ZZ$ recovers the fact $(\ZZ/6\ZZ)/(3\ZZ/6\ZZ)\cong\ZZ/3\ZZ$.
+% \end{example}
+% \begin{exe} \label{exe:fractions}
+%     Let $(G,\cdot)$ be a group, and let $H,K\subseteq G$ be normal subgroups such that $K\subseteq H$. Show that the map $p\colon G/K\to G/H$ defined by $p(g\cdot K)\coloneqq g\cdot H$ is a well-defined homomorphism. By using \Cref{thm:hom}, conclude
+%     \[\frac{G/K}{H/K}\cong\frac GK.\]
+% \end{exe}
+% Congratulations on making it to the end of this course. As our grand finale, \Cref{exe:fractions} tells us that we can do fractions.
 
 \subsection{Problems}
 % \begin{homework}
@@ -508,7 +554,7 @@ Congratulations on making it to the end of this course. As our grand finale, \Cr
     Let $2\ZZ$ denote the subgroup of even integers in $(\ZZ,+)$. Exhibit two distinct isomorphisms $\varphi\colon2\ZZ\to\ZZ$.
 \end{homework}
 
-\begin{homework}
+\begin{homework} \label{prob:groups-of-order-8}
     The groups $D_4$ and $\ZZ/8\ZZ$ both have order $8$.
     \begin{listalph}
         \item Show that $g^4=e$ for all $g\in D_4$.
@@ -534,7 +580,7 @@ Congratulations on making it to the end of this course. As our grand finale, \Cr
 \end{homework}
 
 \begin{homework}
-    Consider the groups $(\ZZ,+)$ and $\ZZ/10\ZZ$.
+    Consider the groups $(\ZZ,+)$ and $(\ZZ/10\ZZ,+)$.
     \begin{enumerate}[label=(\alph*)]
         \item Compute the number of group homomorphisms $\varphi\colon\ZZ\to\ZZ/10\ZZ$.
         \item Compute the number of group homomorphisms $\varphi\colon\ZZ/10\ZZ\to\ZZ$.
@@ -566,8 +612,8 @@ Congratulations on making it to the end of this course. As our grand finale, \Cr
     \end{enumerate}
 \end{homework}
 
-\begin{homework}
-    Show that $\operatorname{GL}_n(\RR)/\operatorname{SL}_n(\RR)$ is isomorphic to $\RR^\times$.
-\end{homework}
+% \begin{homework}
+%     Show that $\operatorname{GL}_n(\RR)/\operatorname{SL}_n(\RR)$ is isomorphic to $\RR^\times$.
+% \end{homework}
 
 \end{document}

@@ -12,10 +12,16 @@ jobs:
         with:
           root_file: main.tex
           args: -pdf
+      - name: latexmk main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: syllabus.tex
+          args: -pdf
       - name: trouble-shooting
         run: |
           mkdir public
           mv main.pdf public
+          mv syllabus.pdf public
       - name: Publish to GitHub pages
         if: success() && github.ref == 'refs/heads/main'
         uses: crazy-max/ghaction-github-pages@v1

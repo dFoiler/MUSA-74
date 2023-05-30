@@ -12,50 +12,9 @@ In this section, we will more closely examine the way that subgroups relate to t
 % \end{notation}
 
 \subsection{Cosets}
-Given a positive integer $n$, the subgroup $n\ZZ$ sits inside the group $(\ZZ,+)$. This viewpoint allows us to understand the construction of $C_n$ better: note $n\mid a-b$ is equivalent to $a-b\in n\ZZ$. In other words, we have
-\[a\equiv b\pmod n\iff a-b\in n\ZZ.\]
-Thus, trying to generalize the construction of $C_n$, we have the following lemma.
-\begin{lemma} \label{lem:r-coset-equiv}
-    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the relation $\sim$ on $G$ by $g\sim h$ if and only if $g\cdot h^{-1}\in H$. Then $\sim$ is an equivalence relation.
-\end{lemma}
-\begin{proof}
-    We have the following checks. Fix $g,h,k\in G$.
-    \begin{itemize}
-        \item Reflexive: we would like to show $g\sim g$, or $g\cdot g^{-1}\in H$. However, $g\cdot g^{-1}=e$, and $e\in H$, so we are done.
-        \item Symmetric: if $g\sim h$, we would like to show $h\sim g$. Unwinding the definition of $\sim$, we are given that $g\cdot h^{-1}\in H$, and we want to show $h\cdot g^{-1}\in H$. However, we see
-        \[\left(g\cdot h^{-1}\right)^{-1}=\left(h^{-1}\right)^{-1}\cdot g^{-1}=h\cdot g^{-1}.\]
-        Here, we have used \Cref{exe:inverse-prod} in the first equality and \Cref{lem:inv-inv} in the second one. Thus, $h\cdot g^{-1}\in H$ because $H$ contains inverses.
-        \item Transitive: given $g\sim h$ and $h\sim k$, we want to show $g\sim k$. Unwinding $\sim$, we are given $g\cdot h^{-1}\in H$ and $h\cdot k^{-1}\in H$, and we want to show $g\cdot k^{-1}$. Well, we the product
-        \[\left(g\cdot h^{-1}\right)\cdot\left(h\cdot k^{-1}\right)=g\cdot \left(h^{-1}\cdot h\right)\cdot k^{-1}=g\cdot e\cdot k^{-1}=g\cdot k^{-1}\]
-        must be in $H$ because $H$ is a subgroup, so we are done.
-        \qedhere
-    \end{itemize}
-\end{proof}
-\begin{exe} \label{exe:l-coset-equiv}
-    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the relation $\sim$ on $G$ by $g\sim h$ if and only if $g^{-1}\cdot h\in H$. Show that $\sim$ is an equivalence relation. This does not follow immediately from \Cref{lem:r-coset-equiv}.
-\end{exe}
-As with $C_n$, the equivalence classes of the above relations are what interest us.
-\begin{lemma}
-    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the equivalence relation $\sim$ from \Cref{lem:r-coset-equiv}. Then the equivalence class represented by $g\in G$ is the set
-    \[H\cdot g\coloneqq\{h\cdot g:h\in H\}.\]
-\end{lemma}
-\begin{proof}
-    For now, let $[g]$ denote the equivalence class represented by $g$. Very quickly, we unwind the definition of $[g]$: note that $g'\in[g]$ if and only if $g'\sim g$, which is in turn equivalent to $g'\cdot g^{-1}\in H$. Now, we have two inclusions to show.
-    \begin{itemize}
-        \item We show $[g]\subseteq H\cdot g$. Note that $g'\in[g]$ if and only if $g'\cdot g^{-1}\in H$, as discussed above. Thus, we define $h\coloneqq g'\cdot g^{-1}$ and see that
-        \[h\cdot g=g'\cdot g^{-1}\cdot g=g'\cdot e=g',\]
-        so $g'\in H\cdot g$ follows.
-        \item We show $H\cdot g\subseteq[g]$. Indeed, suppose we have some $g'=h\cdot g$ in $H\cdot g$. To show $g'\cdot g^{-1}\in H$, we compute
-        \[g'\cdot g^{-1}=h\cdot g\cdot g^{-1}=h\cdot e=h,\]
-        finishing.
-        \qedhere
-    \end{itemize}
-\end{proof}
-\begin{exe} \label{exe:define-left-coset}
-    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the equivalence relation $\sim$ from \Cref{exe:l-coset-equiv}. Show that equivalence class represented by $g\in G$ is the set
-    \[g\cdot H\coloneqq\{g\cdot h:h\in H\}.\]
-\end{exe}
-We are now ready to define cosets: they are the given equivalence classes above.
+Given a positive integer $n$, the subgroup $n\ZZ$ sits inside the group $(\ZZ,+)$. This viewpoint allows us to understand the construction of $C_n$ better: as in \Cref{rem:concrete-coset}, we may think about the element $[a]_n\in C_n$ as
+\[[a]_n=\{a+nk:k\in\ZZ\}=a+n\ZZ.\]
+This motivates the following definition.
 \begin{definition}[coset]
     Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Fix $g\in G$.
     \begin{itemize}
@@ -68,6 +27,9 @@ It can be difficult to read the difference between $H\backslash G$ (right cosets
 \begin{notation}
     As explained at the start of this subsection, we may now write $C_n$ as $\ZZ/n\ZZ$. We might write the equivalence classes $[k]_n$ as $k+n\ZZ$.
 \end{notation}
+\begin{warn}
+    At this point in the notes, $G/H$ and $H\backslash G$ have been constructed as sets, not groups. Later on we will see that $G/H$ can sometimes be turned into a group, like $\ZZ/n\ZZ$.
+\end{warn}
 \begin{exe} \label{exe:nz-is-normal}
     Let $n$ be a positive integer and $k$ an integer. Verify that $k+n\ZZ=n\ZZ+k$ as sets.
 \end{exe}
@@ -112,6 +74,51 @@ Here are a few more abstract examples.
     However, this implies that $g\in e\cdot G$, so $[g]=[e]$, where we are using the equivalence relation of \Cref{exe:l-coset-equiv}. It follows $g\cdot H=e\cdot H$.
 \end{example}
 
+\subsection{Cosets by Equivalence Relation}
+Recall that we technically defined $C_n=\ZZ/n\ZZ$ be equivalence relation. This proves to be a fruitful way to think about cosets, so we generalize the notion here. Again, the point is to focus on the subgroup $n\ZZ\subseteq\ZZ$. The equivalence relation $a\equiv b\pmod n$ is equivalent to $n\mid a-b$, which we now see is equivalent to $a-b\in n\ZZ$. In total, we have
+\[a\equiv b\pmod n\iff a-b\in n\ZZ.\]
+Thus, trying to generalize the equivalence relation of $\ZZ/n\ZZ$, we have the following lemma.
+\begin{lemma} \label{lem:r-coset-equiv}
+    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the relation $\sim$ on $G$ by $g\sim h$ if and only if $g\cdot h^{-1}\in H$. Then $\sim$ is an equivalence relation.
+\end{lemma}
+\begin{proof}
+    We have the following checks. Fix $g,h,k\in G$.
+    \begin{itemize}
+        \item Reflexive: we would like to show $g\sim g$, or $g\cdot g^{-1}\in H$. However, $g\cdot g^{-1}=e$, and $e\in H$, so we are done.
+        \item Symmetric: if $g\sim h$, we would like to show $h\sim g$. Unwinding the definition of $\sim$, we are given that $g\cdot h^{-1}\in H$, and we want to show $h\cdot g^{-1}\in H$. However, we see
+        \[\left(g\cdot h^{-1}\right)^{-1}=\left(h^{-1}\right)^{-1}\cdot g^{-1}=h\cdot g^{-1}.\]
+        Here, we have used \Cref{exe:inverse-prod} in the first equality and \Cref{lem:inv-inv} in the second one. Thus, $h\cdot g^{-1}\in H$ because $H$ contains inverses.
+        \item Transitive: given $g\sim h$ and $h\sim k$, we want to show $g\sim k$. Unwinding $\sim$, we are given $g\cdot h^{-1}\in H$ and $h\cdot k^{-1}\in H$, and we want to show $g\cdot k^{-1}$. Well, we the product
+        \[\left(g\cdot h^{-1}\right)\cdot\left(h\cdot k^{-1}\right)=g\cdot \left(h^{-1}\cdot h\right)\cdot k^{-1}=g\cdot e\cdot k^{-1}=g\cdot k^{-1}\]
+        must be in $H$ because $H$ is a subgroup, so we are done.
+        \qedhere
+    \end{itemize}
+\end{proof}
+\begin{exe} \label{exe:l-coset-equiv}
+    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the relation $\sim$ on $G$ by $g\sim h$ if and only if $g^{-1}\cdot h\in H$. Show that $\sim$ is an equivalence relation. This does not follow immediately from \Cref{lem:r-coset-equiv}.
+\end{exe}
+As with $C_n$, the equivalence classes of the above relations are what interest us.
+\begin{lemma}
+    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the equivalence relation $\sim$ from \Cref{lem:r-coset-equiv}. Then the equivalence class represented by $g\in G$ is the set
+    \[H\cdot g\coloneqq\{h\cdot g:h\in H\}.\]
+\end{lemma}
+\begin{proof}
+    For now, let $[g]$ denote the equivalence class represented by $g$. Very quickly, we unwind the definition of $[g]$: note that $g'\in[g]$ if and only if $g'\sim g$, which is in turn equivalent to $g'\cdot g^{-1}\in H$. Now, we have two inclusions to show.
+    \begin{itemize}
+        \item We show $[g]\subseteq H\cdot g$. Note that $g'\in[g]$ if and only if $g'\cdot g^{-1}\in H$, as discussed above. Thus, we define $h\coloneqq g'\cdot g^{-1}$ and see that
+        \[h\cdot g=g'\cdot g^{-1}\cdot g=g'\cdot e=g',\]
+        so $g'\in H\cdot g$ follows.
+        \item We show $H\cdot g\subseteq[g]$. Indeed, suppose we have some $g'=h\cdot g$ in $H\cdot g$. To show $g'\cdot g^{-1}\in H$, we compute
+        \[g'\cdot g^{-1}=h\cdot g\cdot g^{-1}=h\cdot e=h,\]
+        finishing.
+        \qedhere
+    \end{itemize}
+\end{proof}
+\begin{exe} \label{exe:define-left-coset}
+    Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Define the equivalence relation $\sim$ from \Cref{exe:l-coset-equiv}. Show that equivalence class represented by $g\in G$ is the set
+    \[g\cdot H\coloneqq\{g\cdot h:h\in H\}.\]
+\end{exe}
+
 \subsection{How to Think About Cosets}
 The following proposition explains how to think about cosets. Being able to interface with all the equivalent conditions is important.
 \begin{proposition} \label{prop:how-to-coset}
@@ -126,8 +133,23 @@ The following proposition explains how to think about cosets. Being able to inte
         \item $g_1H=g_2H$.
     \end{listalph}
 \end{proposition}
-\begin{proof}
-    This proof contains no ``hard work.'' Instead, we will essentially reduce everything to the equivalence relation $\sim$ of \Cref{exe:l-coset-equiv} so that the sets $g\cdot H$ are the equivalence classes by \Cref{exe:define-left-coset}.
+We will give two proofs of this result: first, we will show the equivalences by direct computation of cosets. Second, we will provide a proof using \Cref{exe:define-left-coset} in order to showcase its power.
+\begin{proof}[Proof by computation]
+    We proceed in steps.
+    \begin{enumerate}
+        \item We show that (a) and (b) are equivalent. Note $g_1^{-1}\cdot g_2\in H$ implies that $g_2^{-1}\cdot g_1=\left(g_1^{-1}\cdot g_2\right)^{-1}\in H$ because $H$ is a subgroup. Thus, (a) implies (b), and switching the roles of $g_1$ and $g_2$ shows that (b) implies (a).
+        \item We show that (a) implies (c); switching the roles of $g_1$ and $g_2$ will show that (b) implies (d). Well, $h\coloneqq g_1^{-1}\cdot g_2\in H$ implies
+        \[g_1=g_2\cdot h^{-1}\in g_2\cdot H.\]
+        \item We show that (c) implies (e); switching the roles of $g_1$ and $g_2$ will show that (d) implies (f). Well, $g_1\in g_2\cdot H$ implies that we may write $g_1=g_2\cdot h_0$ for some $h_0\in H$. Thus,
+        \[g_1\cdot H=\{g_2\cdot(h_0\cdot h):h\in H\}\subseteq\{g_2\cdot h:h\in H\}=g_2\cdot H\]
+        because $h_0\cdot h\in H$ for any $h\in H$.
+        \item We show that (e) implies (a); switching the roles of $g_1$ and $g_2$ will show (f) implies (b). Well, $g_1\cdot H\subseteq g_2\cdot H$ implies that $g_1\cdot e\in g_1\cdot H$ lives in $g_2\cdot H$, so we may write $g_1=g_2\cdot h$ for some $h\in H$. Thus, $g_1^{-1}\cdot g_2=h^{-1}\in H$.
+        \item The above work shows that (a)--(f) are all equivalent. In one direction, note that (g) implies (e). In the other direction, note that (e) implies (f) by the above work, so (e) implies (e) and (f), which is (g).
+        \qedhere
+    \end{enumerate}
+\end{proof}
+\begin{proof}[Proof by equivalence relation]
+    We will be a little terser in this proof. Indeed, this proof contains no ``hard work.'' Instead, we will essentially reduce everything to the equivalence relation $\sim$ of \Cref{exe:l-coset-equiv} so that the sets $g\cdot H$ are the equivalence classes by \Cref{exe:define-left-coset}.
 
     For example, because $g_1\sim g_2$ is equivalent to $g_2\sim g_1$, we see that (a) and (b) are equivalent. Furthermore, because cosets are the equivalence classes, we see that $g_1\in g_2\cdot H$ is equivalent to $g_1^{-1}\cdot g_2\in H$, establishing (a) and (c) are equivalent. Similarly, (b) and (d) are equivalent. Thus, all of (a)--(d) are equivalent.
     
@@ -225,6 +247,44 @@ Let's see an example of how to use these conditions.
     \[Z(G)\coloneqq\{g\in G:g\cdot h=g\cdot g\text{ for all }h\in G\}\]
     is a subgroup of $G$. Thus, $|Z(G)|$ divides $|G|$. This is not at all obvious a priori!
 \end{example}
+Here is a more involved consequence.
+\begin{proposition} \label{prop:ord-of-g-divides-ord-of-g}
+    Let $(G,\cdot)$ be a finite group. For any $g\in G$, we have $g^{\left|G\right|}=e$, where $e$ is the identity of $G$. In fact, the smallest positive integer $k$ such that $g^k=e$ divides $\left|G\right|$.
+\end{proposition}
+Before jumping into the proof, we note that \Cref{prop:ord-of-g-divides-ord-of-g} is ``sharp'' in the following sense: there do exist groups $G$ such that $\left|G\right|$ is the smallest positive integer $n$ such that $g^n=e$.
+\begin{example}
+    Fix a positive integer $n$ and consider the group $(\ZZ/n\ZZ,+)$. Suppose that $n_0$ is a positive integer such that $n_0\cdot[k]_n=[0]_n$ for any $[k]_n\in\ZZ/n\ZZ$; we claim that $n_0\ge n$. Well, we see that
+    \[[n_0]_n=n_0\cdot[1]_n=[0]_n,\]
+    so $n$ divides $n_0$. To finish, we may write $n_0=nq$ for some integer $q$, so because $n_0,n>0$, we see that $q\ge1$, so $n_0\ge n$ follows.
+\end{example}
+Anyway, let's move on with the proof.
+\begin{proof}[Proof of \Cref{prop:ord-of-g-divides-ord-of-g}]
+    The main character of this proof is the subgroup
+    \[\langle g\rangle\coloneqq\left\{g^k:k\in\ZZ\right\}\]
+    of $G$ defined in \Cref{prop:cyclic-subgroup}. For clarity, we proceed in steps.
+    \begin{enumerate}
+        \item We show that there exists some positive integer $n$ such that $g^n=e$. Indeed, $\langle g\rangle$ is a finite set because it is a subset of the finite set $G$, so because $\ZZ$ is infinite, there must integers $m$ and $n$ such that $g^m=g^n$. Switching $n$ and $m$ if necessary, we may assume that $m>n$, so we see
+        \[g^{m-n}=g^m\cdot\left(g^n\right)^{-1}=e.\]
+        Thus, $m-n>0$ is the desired positive integer.
+        \item Let $n$ be any positive integer such that $g^n=e$. We claim that
+        \[\langle g\rangle\stackrel?=\left\{e,g,g^2,\ldots,g^{k-1}\right\}\]
+        and that all elements on the right-hand side are distinct. To begin, note $\left\{e,g,g^2,\ldots,g^{k-1}\right\}\subseteq\langle g\rangle$ by definition of $\langle g\rangle$. In the other direction, for any $g^{m}\in\langle g\rangle$ where $m\in\ZZ$ is an integer, use \Cref{thm:division} to write $m=nq+r$ where $0\le r<n$. Then
+        \[g^{m}=g^{nq}\cdot g^r=\left(g^n\right)^q\cdot g^r=e^q\cdot g^r=e\cdot g^r=g^r\in\left\{e,g,g^2,\ldots,g^{n-1}\right\}.\]
+        \item Now, let $k$ be the least positive integer such that $g^k=e$. We claim that $\left|\langle g\rangle\right|=k$. By the previous step, we know that
+        \[\langle g\rangle=\left\{e,g,g^2,\ldots,g^{k-1}\right\},\]
+        so it is enough to show that the elements in the set on the right-hand side are distinct. Well, suppose that $g^m=g^n$ for some $0\le m,n<k$. By swapping $n$ and $m$ if necessary, we may assume that $m\ge n$. As before, we note $g^{m-n}=g^m\cdot\left(g^n\right)^{-1}=e$, but $0\le m-n<k$, so $m-n=0$ by the minimality of $k$. Thus, $m=n$.
+        \item We complete the proof. Set $n\coloneqq\left|G\right|$ for brevity. By \Cref{cor:ord-subgroup}, we see that the size of $\langle g\rangle$ divides $n$. By the previous step, we see that $\left|\langle g\rangle\right|=k$, so we see $k\mid n$. Finishing up, write $n=qk$ for some integer $q$. Then
+        \[g^n=g^{qk}=\left(g^k\right)^q=e^q=e,\]
+        which is what we wanted.
+        \qedhere
+    \end{enumerate}
+\end{proof}
+\begin{exe}
+    Verify by hand that $g^8=e$ for any element $g\in D_4$.
+\end{exe}
+\begin{remark}
+    \Cref{prop:ord-of-g-divides-ord-of-g} is not ``sharp'' in the following sense: there exist groups $G$ and positive integers $n$ less than $\left|G\right|$ such that $g^n$ is the identity for any $g\in G$. For example, one can verify by hand that $g^4$ is the identity for any $g\in D_4$.
+\end{remark}
 
 \subsection{Quotient Groups}
 We continue trying to generalize our construction of $\ZZ/n\ZZ$. Given a group $(G,\cdot)$ with subgroup $H\subseteq G$, we might hope that we can make $G/H$ into a group with the operation
@@ -243,7 +303,7 @@ Let's investigate this further. Thinking symbolically about our cosets (for exam
 \begin{equation}
     (g_1\cdot H)\cdot(g_2\cdot H)=g_1\cdot(H\cdot g_2)\cdot H\stackrel*=g_1\cdot(g_2\cdot H)\cdot H=(g_1\cdot g_2)\cdot H, \label{eq:pipe-dream-normal-subgroup}
 \end{equation}
-where maybe $H\cdot H=H$. However, there is an issue at the marked equality $\stackrel*=$: we won't always have $g_2\cdot H=H\cdot g_2$! For example, in \Cref{ex:d4-cosets}, we saw $r\cdot S\ne r\cdot S$, which was more or less the problem in \Cref{ex:bad-quotient}.
+where maybe $H\cdot H=H$. However, there is an issue at the marked equality $\stackrel*=$: we won't always have $g_2\cdot H=H\cdot g_2$! For example, in \Cref{ex:d4-cosets}, we saw $r\cdot S\ne S\cdot r$, which was more or less the problem in \Cref{ex:bad-quotient}.
 
 However, in our construction of $\ZZ/n\ZZ$, we saw in \Cref{exe:nz-is-normal} that we do have $k+n\ZZ=n\ZZ+k$ for any $k\in\ZZ$, so sometimes we will have the property that $g_2\cdot H=H\cdot g_2$. As such, we define a new adjective.
 \begin{definition}[normal]
@@ -260,6 +320,9 @@ Here are the examples we have easy access to.
         \item If $g\notin R$, then $g\cdot R$ cannot have intersection with $e\cdot R$ by \Cref{cor:intersect-cosets}. However, $D_4$ has eight elements, and $e\cdot R=R$ and $g\cdot R$ must both have four elements by \Cref{thm:lagrange}, so $g\cdot R$ must be $D_4\setminus R$. The same argument shows $R\cdot g=D_4\setminus R$, so $g\cdot R=R\cdot g$ follows.
     \end{itemize}
 \end{example}
+\begin{exercise}
+    Show that the subgroup $\left\{e,r^2\right\}$ of $(D_4,\cdot)$ is normal.
+\end{exercise}
 \begin{example}
     Let $(G,\cdot)$ be a group, and set $Z(G)\coloneqq\{g\in G:g\cdot h=h\cdot g\text{ for all }h\in G\}$. Then $Z(G)$ is a normal subgroup of $G$. Indeed, for any $g\in G$, we compute
     \begin{align*}
@@ -319,15 +382,15 @@ Continuing our story, as we might hope from \eqref{eq:pipe-dream-normal-subgroup
     Let $(G,\cdot)$ be a group and $H\subseteq G$ a subgroup. Show that the function $f\colon G/H\to H\backslash G$ defined by $f(g\cdot H)\coloneqq H\cdot g^{-1}$ is well-defined and a bijection. What is the inverse function?
 \end{homework}
 
-\begin{homework}
-    Let $(G,\cdot)$ be a group such that $|G|=p$, where $p$ is a prime number.
-    \begin{listalph}
-        \item Let $g\in G$ be an element not equal to the identity. Show that
-        \[\langle g\rangle\coloneqq\left\{e,g,g^2,g^3,g^3,\ldots\right\}\]
-        is a subgroup of $G$.
-        \item Show that $|\langle g\rangle|>1$. Conclude that $|\langle g\rangle|=p$ and thus $G=\langle g\rangle$.
-    \end{listalph}
-\end{homework}
+% \begin{homework}
+%     Let $(G,\cdot)$ be a group such that $|G|=p$, where $p$ is a prime number.
+%     \begin{listalph}
+%         \item Let $g\in G$ be an element not equal to the identity. Show that
+%         \[\langle g\rangle\coloneqq\left\{e,g,g^2,g^3,g^3,\ldots\right\}\]
+%         is a subgroup of $G$.
+%         \item Show that $|\langle g\rangle|>1$. Conclude that $|\langle g\rangle|=p$ and thus $G=\langle g\rangle$.
+%     \end{listalph}
+% \end{homework}
 
 \begin{homework}
     Let $(G,\cdot)$ be an abelian group. Show that all subgroups $H\subseteq G$ are normal.
@@ -338,6 +401,7 @@ Continuing our story, as we might hope from \eqref{eq:pipe-dream-normal-subgroup
     \[g\cdot H\cdot g^{-1}\coloneqq\left\{g\cdot h\cdot g^{-1}:h\in H\right\}.\]
     Show the following.
     \begin{listalph}
+        \item Show that $g\cdot H\cdot g^{-1}$ is a subgroup of $G$.
         \item If $g\cdot H\cdot g^{-1}=H$, then $g\cdot H=H\cdot g$.
         \item If $H$ is a normal subgroup, then $g\cdot H\cdot g^{-1}=H$ for all $g\in G$.
         \item If $g\cdot H\cdot g^{-1}=H$ for all $g\in G$, then $H$ is normal.
@@ -345,7 +409,13 @@ Continuing our story, as we might hope from \eqref{eq:pipe-dream-normal-subgroup
 \end{homework}
 
 \begin{homework}
-    Let $(G,\cdot)$ be a group, and let $H_1,H_2\subseteq G$ be normal subgroups. Show that $H_1\cap H_2$ is a normal subgroup.
+    Let $(G,\cdot)$ be a group.
+    \begin{listalph}
+        \item Let $H_1,H_2\subseteq G$ be normal subgroups. Show that $H_1\cap H_2$ is a normal subgroup.
+        \item Let $\mc S_n$ be the set of all subgroups $H\subseteq G$ with $n$ elements. Show that the intersection
+        \[\bigcap_{H\in\mc S_n}H\]
+        is normal.
+    \end{listalph}
 \end{homework}
 
 \begin{homework}
