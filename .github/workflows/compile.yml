@@ -8,7 +8,9 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
       - name: install asy
-        run: sudo apt install -y asymptote
+        run: |
+          sudo apt install -y asymptote
+          asy --version
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
