@@ -10,7 +10,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          pre_compile: "sudo apt-get install -y asymptote"
+          pre_compile: "apt-get install -y asymptote"
           root_file: main.tex
       - name: trouble-shooting
         run: |
