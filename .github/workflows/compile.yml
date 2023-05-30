@@ -19,6 +19,7 @@ jobs:
         run: |
           mkdir public
           mv main.pdf public
+          mv syllabus.pdf public
       - name: Publish to GitHub pages
         if: success() && github.ref == 'refs/heads/main'
         uses: crazy-max/ghaction-github-pages@v1
